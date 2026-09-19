@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="format-detection" content="telephone=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>小沉淀自助打印 · 扫码即打</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #eef0f3;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  img { max-width: 100% !important; height: auto !important; display: block; }
+  .wrap { max-width: 680px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 24px; }
+  .qr { cursor: pointer; transition: transform .12s ease; }
+  .qr:active { transform: scale(.96); }
+  .lb { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none;
+    align-items: center; justify-content: center; flex-direction: column;
+    z-index: 999; padding: 24px; }
+  .lb.show { display: flex; }
+  .lb img { width: 78vw; max-width: 360px; max-height: 68vh; background: #fff;
+    border-radius: 14px; padding: 14px; -webkit-touch-callout: default; }
+  .lb .lb-tip { color: #fff; font-size: 15px; margin-top: 20px; text-align: center; line-height: 1.7; opacity: .92; }
+  .lb .lb-close { position: absolute; top: 16px; right: 22px; color: #fff; font-size: 34px; line-height: 1; }
+
+  .campus-nav { position: sticky; top: 0; z-index: 50; background: #fff; padding: 8px 10px; box-shadow: 0 2rpx 12rpx rgba(17,24,39,.06); }
+  .cn-inner { display: flex; gap: 8px; max-width: 680px; margin: 0 auto; }
+  .cn-inner button { flex: 1; border: 1px solid #ffd9c9; background: #fff1ea; color: #f2542d; font-size: 14px; font-weight: 700; padding: 9px 4px; border-radius: 999rpx; }
+  .cn-inner button:active { background: #ff6a3c; color: #fff; }
+  [id^="campus-"] { scroll-margin-top: 56px; }
+  .qr-card { position: relative; }
+  .qr-card::after { content: "🔍"; position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; line-height: 24px; text-align: center; background: rgba(255,106,60,.92); border-radius: 50%; font-size: 13px; color: #fff; pointer-events: none; }
+  .lb .lb-save { margin-top: 16px; background: #ff6a3c; color: #fff; border: none; font-size: 15px; font-weight: 700; padding: 11px 28px; border-radius: 999rpx; }
+  .lb .lb-save:active { background: #f2542d; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="campus-nav"><div class="cn-inner"><button data-go="xm">厦门大学</button><button data-go="qz">泉州医高专</button><button data-go="yg">阳光学院</button></div></div>
+<section style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;color:#2b2f3a;line-height:1.7;max-width:680px;margin:0 auto;padding:18px"><div style="background:linear-gradient(135deg,#ff6a3c,#f2542d);color:#fff;border-radius:16px;padding:22px 18px;text-align:center;margin-bottom:8px"><div style="font-size:21px;font-weight:800">📍 在校随时打印 · 扫码即打</div><div style="font-size:14px;opacity:.9;margin-top:8px">3 个校区 · 16 个扫码点，找到你所在的楼栋长按二维码即可下单</div></div><p style="font-size:14px;color:#6b7280;margin:16px 2px 4px">👇 滑到你的校区，点击对应楼栋的二维码放大，再长按识别即可打印。</p><div style="margin:22px 0"><div id="campus-xm" style="background:linear-gradient(135deg,#ff6a3c,#f2542d);color:#fff;font-size:18px;font-weight:700;padding:13px 16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><span>厦门大学</span><span style="font-size:13px;opacity:.9;font-weight:400">11 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="1.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">博学3栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="2.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="3.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学武楼2号</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="4.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="5.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪5栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="6.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪3栋</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="7.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">笃行2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="8.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉5栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="9.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学生活动中心</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="10.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉9栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="11.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学武1号</div></div></td><td width="33.33%" style="padding:5px"></td></tr></table></div><div style="margin:22px 0"><div id="campus-qz" <div <span style="font-size:13px;opacity:.9;font-weight:400">3 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="12.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">2号楼求真楼</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="13.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">13号楼精诚B</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="14.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">15号精诚苑D</div></div></td></tr></table></div><div style="margin:22px 0"><div id="campus-yg" <div <span style="font-size:13px;opacity:.9;font-weight:400">2 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="15.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">宿舍楼A4</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="16.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">教学楼2楼</div></div></td><td width="33.33%" style="padding:5px"></td></tr></table></div><div style="background:#f6f8ff;border-left:4px solid #ff6a3c;border-radius:10px;padding:14px 16px;margin:24px 0;font-size:14px;color:#3a4256"><b style="color:#ff6a3c">使用步骤</b><br>① 找到你所在楼栋的二维码　② 长按识别　③ 选文件下单　④ 到机器取件<br><span style="color:#e0533d">任何打印问题（无论打多少页、打到哪一步）全额退款。</span></div><div style="background:#fff7f0;border-left:4px solid #ff8a3d;border-radius:10px;padding:14px 16px;margin:24px 0;font-size:14px;color:#3a4256"><b style="color:#ff6a3d">🙋 客服联系</b><br>如果二维码扫不出来、打印遇上任何问题，或有其他疑问，<b>直接在这公众号对话框给我们发消息</b>即可，客服会尽快回复帮你解决。<span style="color:#9aa0b0">（非工作时间留言，也会在恢复后第一时间处理）</span></div><div style="text-align:center;font-size:13px;color:#9aa0b0;margin:18px 0 6px">公众号回复「厦大 / 泉医 / 阳光」也可获取对应校区二维码</div></section>
+</div>
+<div class="lb" id="lb">
+  <div class="lb-close" id="lbClose">×</div>
+  <img id="lbImg" src="" alt="二维码">
+  <div class="lb-tip">长按上方二维码 → 点「识别二维码」即可下单打印<br>或点下方按钮保存图片，用微信「扫一扫」从相册识别</div>
+  <button class="lb-save" id="lbSave">保存图片</button>
+</div>
+<script>
+  (function(){
+    var lb = document.getElementById('lb');
+    var lbImg = document.getElementById('lbImg');
+    var imgs = document.querySelectorAll('.wrap img');
+    for (var i = 0; i < imgs.length; i++){
+      imgs[i].classList.add('qr');
+      if(imgs[i].parentElement) imgs[i].parentElement.classList.add('qr-card');
+      imgs[i].addEventListener('click', function(){
+        lbImg.src = this.src;
+        lb.classList.add('show');
+      });
+    }
+    function closeLb(){ lb.classList.remove('show'); }
+    document.getElementById('lbClose').addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    document.getElementById('lbSave').addEventListener('click', function(e){ e.stopPropagation(); window.location.href = lbImg.src; });
+    var navBtns = document.querySelectorAll('.campus-nav button');
+    for (var k = 0; k < navBtns.length; k++){
+      navBtns[k].addEventListener('click', function(){
+        var el = document.getElementById('campus-' + this.getAttribute('data-go'));
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  })();
+</script>
+</body>
+</html>
