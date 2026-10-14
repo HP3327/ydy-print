@@ -96,14 +96,7 @@
     background:rgba(255,106,24,.92);display:grid;place-items:center;box-shadow:0 2px 6px rgba(255,106,24,.32)}
   .tile .zoom svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2}
 
-  /* ================= 楼栋搜索 ================= */
-  #locBar{margin:0 16px 12px}
-  .srch{display:flex;align-items:center;gap:8px;background:#fff;
-    border:1px solid var(--line);border-radius:13px;padding:10px 12px}
-  .srch svg{width:16px;height:16px;flex:none;stroke:var(--ink3);fill:none;stroke-width:2}
-  .srch input{flex:1;min-width:0;border:0;outline:none;font-size:13.5px;font-weight:600;
-    background:none;color:var(--ink);padding:0}
-  .srch input::placeholder{color:#b3a79c;font-weight:500}
+  /* ================= 空态 ================= */
   .empty{padding:26px 12px;text-align:center;color:var(--ink3);font-size:13px}
 
   /* ================= 免费打印：广告位 ================= */
@@ -176,18 +169,6 @@
   .casetip{display:flex;gap:7px;margin-top:9px;background:#fff8f2;border:1px dashed #ffc7a6;
     border-radius:12px;padding:9px 11px;font-size:11.5px;color:#8a5a45;line-height:1.65}
   .casetip b{color:#b8430d}
-
-  /* ===== A 方案：明示复制按钮 ===== */
-  .copycard{margin-top:13px;background:linear-gradient(135deg,#fff6ef,#ffe9dc);
-    border:1px solid #ffd0b4;border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px}
-  .copycard .tx{flex:1;min-width:0}
-  .copycard .tx b{display:block;font-size:13.5px;font-weight:900;color:#b8430d}
-  .copycard .tx span{display:block;font-size:11px;color:#8a5a45;margin-top:2px;line-height:1.5}
-  .copycard .btn{flex:none;font-size:13.5px;font-weight:900;color:#fff;background:var(--grad);
-    padding:11px 15px;border-radius:999px;box-shadow:0 4px 12px rgba(255,90,40,.26);
-    transition:transform .14s ease}
-  .copycard .btn:active{transform:scale(.96)}
-  .copyhint{margin-top:8px;font-size:10.5px;color:#a87b5f;line-height:1.6}
 
   @media (max-width:400px){
     .split{flex-direction:column}
@@ -297,15 +278,6 @@
     </div>
   </header>
 
-  <!-- 楼栋搜索 -->
-  <div id="locBar">
-    <div class="srch">
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
-      <input id="q" type="search" inputmode="search" autocomplete="off"
-             placeholder="搜楼栋名，如 芙蓉、映雪、求真楼" aria-label="搜索楼栋">
-    </div>
-  </div>
-
   <!-- 校区切换 -->
   <div class="segbar"><div class="seg" id="seg" role="tablist">
     <button data-p="xm" class="on" role="tab">厦门大学<span class="n">11 个点位</span></button>
@@ -348,9 +320,6 @@
       <div class="go">去了解</div>
     </a>
   </section>
-
-  <!-- 面板：搜索结果 -->
-  <section class="panel" id="p-srch"></section>
 
   <!-- 免费打印：广告填充板块 -->
   <section class="free" id="free">
@@ -396,13 +365,6 @@
       <span aria-hidden="true">💬</span>
       <span>看不懂规则没关系，<b>照右边的对话做就行</b>：把两张截图发给客服，剩下的交给我们。</span>
     </div>
-
-    <!-- A 方案：明示复制外卖口令 -->
-    <div class="copycard">
-      <div class="tx"><b>复制外卖红包口令</b><span>点一下，打开美团/饿了么 APP 自动弹红包</span></div>
-      <button class="btn" id="copyBtn" aria-label="复制外卖红包口令">复制</button>
-    </div>
-    <p class="copyhint">本链接为推广链接，平台会给我们返利，<b>不影响你的红包金额</b>。复制后去外卖 APP 即可使用。</p>
 
     <div class="faq">
       <details open><summary>红包在哪里领？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
@@ -454,7 +416,6 @@
     qz: [['12.jpg','2号楼求真楼'],['13.jpg','13号楼精诚B'],['14.jpg','15号精诚苑D']],
     yg: [['15.jpg','宿舍楼A4'],['16.jpg','教学楼2楼']]
   };
-  var GRID_NAME = {xm:'厦门大学', qz:'泉州医高专', yg:'阳光学院'};
   var ZOOM = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">'+
              '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M11 8.5v5M8.5 11h5"/></svg>';
 
@@ -490,56 +451,18 @@
     b.addEventListener('click', function(){ go(b.getAttribute('data-p')); apply(); });
   });
 
-  /* ===== 搜楼栋：命中则只留那一个点位 ===== */
-  var qEl = document.getElementById('q');
-  function allItems(){
-    var out = [];
-    Object.keys(DATA).forEach(function(k){
-      DATA[k].forEach(function(it){ out.push({k:k, f:it[0], n:it[1]}); });
-    });
-    return out;
-  }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function apply(){
-    var q = (qEl.value||'').trim().toLowerCase();
-    if(!q){
-      Object.keys(panels).forEach(function(k){
-        document.getElementById(panels[k]).classList.toggle('on', k===cur);
-      });
-      document.querySelector('.segbar').style.display = '';
-      Object.keys(DATA).forEach(function(k){
-        var g = document.querySelector('[data-grid="'+k+'"]');
-        if(g && !g.innerHTML) render(k);
-      });
-      return;
-    }
-    var hits = allItems().filter(function(it){
-      return (it.n + ' ' + GRID_NAME[it.k]).toLowerCase().indexOf(q) >= 0;
-    });
-    if(!hits.length) hits = [];          // 无匹配：下面渲染空态
-    document.querySelector('.segbar').style.display = 'none';
     Object.keys(panels).forEach(function(k){
-      document.getElementById(panels[k]).classList.remove('on');
+      document.getElementById(panels[k]).classList.toggle('on', k===cur);
     });
-    var host = document.getElementById('p-srch');
-    host.classList.add('on');
-    host.innerHTML = '<div class="p-head"><h2>搜索结果</h2><span class="cnt">'+hits.length+' 个点位</span></div>'+
-      (hits.length
-        ? '<p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p><div class="grid" id="srchGrid"></div>'
-        : '<div class="empty">没搜到这个楼栋。<br>换个关键词试试，比如 芙蓉、映雪、求真楼。</div>');
-    if(hits.length){
-      var g = document.getElementById('srchGrid'), html = '';
-      hits.forEach(function(it,i){
-        html += tileHTML(it.f, it.n, i, GRID_NAME[it.k] + ' · ');
-      });
-      g.innerHTML = html;
-    }
+    document.querySelector('.segbar').style.display = '';
+    Object.keys(DATA).forEach(function(k){
+      var g = document.querySelector('[data-grid="'+k+'"]');
+      if(g && !g.innerHTML) render(k);
+    });
   }
-  var tmr;
-  qEl.addEventListener('input', function(){
-    clearTimeout(tmr); tmr = setTimeout(apply, 160);
-  });
 
   function scrollToFree(e){
     e.preventDefault();
@@ -609,45 +532,41 @@
     }
   });
 
-  /* ===== 组合方案（C）：手动按钮 + 自动复制（首交互/2 秒兜底） ===== */
+  /* ===== 口令复制：点真实入口的那一下同步写入（浏览器只认用户手势） =====
+     关键：必须「同步」调用，不能包在 setTimeout / Promise 里，否则授权失效。
+     优先用同步的 execCommand（微信 WebView 兼容性最好），navigator.clipboard 兜底。
+     全程零提示、零变色。 */
   var COPY = '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰uhNTExZWQ1NTc💰 ￥FpmKTsvaspk￥/ HU7405！S28py9VsiwZ0Cp2u！ MU5104';
-  var copyBtn = document.getElementById('copyBtn');
   function copyText(txt){
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      try { navigator.clipboard.writeText(txt); return true; } catch(e){}
-    }
+    var ok = false;
+    // ① 同步路径：手势内直接 execCommand，兼容微信/安卓 WebView
     try {
       var ta = document.createElement('textarea');
-      ta.value = txt; ta.setAttribute('readonly','');
-      ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+      ta.value = txt;
+      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0';
+      ta.setAttribute('readonly','');
       ta.contentEditable = true; ta.readOnly = false;
       document.body.appendChild(ta);
-      ta.focus(); ta.setSelectionRange(0, 999999);
-      var ok = document.execCommand('copy');
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, 999999);
+      ok = document.execCommand('copy');
       document.body.removeChild(ta);
-      return ok;
-    } catch(e){ return false; }
-  }
-  // 手动按钮：用户主动点（复制即复制，不加任何成功提示/变绿）
-  copyBtn.addEventListener('click', function(){
-    copyText(COPY);
-  });
-  // 自动复制：优先挂「首次用户交互」（滚动/触摸/点击任意位置都算手势，浏览器才允许写剪贴板）；
-  // 另保留 2 秒定时兜底（桌面端文档聚焦时可能成功，移动端通常被拦，由首交互补齐）。
-  (function autoCopy(){
-    if(sessionStorage.getItem('freeCopyDone')) return;
-    var done = false;
-    var EV = ['touchstart','pointerdown','click','keydown','scroll'];
-    function fire(){
-      if(done) return;
-      done = true;
-      if(copyText(COPY)){ sessionStorage.setItem('freeCopyDone','1'); }
-      EV.forEach(function(ev){ document.removeEventListener(ev, fire, true); });
-      clearTimeout(timer);
+    } catch(e){}
+    // ② 兜底：现代 API（异步，作为补充手段）
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try { navigator.clipboard.writeText(txt); } catch(e){}
     }
-    EV.forEach(function(ev){ document.addEventListener(ev, fire, true); });
-    var timer = setTimeout(fire, 2000);
-  })();
+    return ok;
+  }
+  // 三个真实入口：用户一点，就在那一下同步复制（照常执行原本的放大/切换/滚动）
+  document.addEventListener('click', function(e){
+    var t = e.target, c = (t && t.closest) ? t.closest.bind(t) : null;
+    if(!c) return;
+    if(c('.tile') || c('#seg button') || c('[data-free]') || c('#dockBtn')){
+      copyText(COPY);
+    }
+  }, true);
 })();
 </script>
 </body>
