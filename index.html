@@ -3,72 +3,643 @@
 <head>
 <meta charset="utf-8">
 <meta name="format-detection" content="telephone=no">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fffaf4">
+<meta name="description" content="小沉淀自助打印：厦门大学、泉州医高专、阳光学院 16 个楼栋点位，扫码选文件下单，到自助机取件。打印问题全额退款。">
+<meta property="og:title" content="小沉淀自助打印 · 扫码即打">
+<meta property="og:description" content="3 校区 16 个点位，扫码下单，自助机取件。">
+<meta property="og:type" content="website">
 <title>小沉淀自助打印 · 扫码即打</title>
 <style>
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: #eef0f3;
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
-  img { max-width: 100% !important; height: auto !important; display: block; }
-  .wrap { max-width: 680px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 24px; }
-  .qr { cursor: pointer; transition: transform .12s ease; }
-  .qr:active { transform: scale(.96); }
-  .lb { position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none;
-    align-items: center; justify-content: center; flex-direction: column;
-    z-index: 999; padding: 24px; }
-  .lb.show { display: flex; }
-  .lb img { width: 78vw; max-width: 360px; max-height: 68vh; background: #fff;
-    border-radius: 14px; padding: 14px; -webkit-touch-callout: default; }
-  .lb .lb-tip { color: #fff; font-size: 15px; margin-top: 20px; text-align: center; line-height: 1.7; opacity: .92; }
-  .lb .lb-close { position: absolute; top: 16px; right: 22px; color: #fff; font-size: 34px; line-height: 1; }
+  :root{
+    --paper:#fffaf4; --paper2:#fff4e9; --card:#ffffff;
+    --ink:#1c1917; --ink2:#57534e; --ink3:#8a7f75;
+    --brand:#ff6a18; --brand2:#ff3b6b; --soft:#fff1e6; --bd:#ffd9c2;
+    --line:#f0e4d8; --ok:#0f8a52;
+    --r:16px; --sh:0 2px 10px rgba(60,40,25,.06);
+    --grad:linear-gradient(135deg,#ff7a18 0%,#ff3b6b 100%);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"PingFang SC","HarmonyOS Sans SC","Source Han Sans SC","Noto Sans SC","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.6}
+  img{max-width:100%;display:block}
+  button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+  .wrap{max-width:680px;margin:0 auto;min-height:100vh;padding-bottom:112px;position:relative;overflow-x:hidden}
+  .wrap::before{content:"";position:absolute;top:0;left:-20%;right:-20%;height:420px;z-index:0;pointer-events:none;
+    background:radial-gradient(60% 70% at 22% 0%,#ffe9d2 0%,rgba(255,233,210,0) 70%),
+               radial-gradient(50% 60% at 88% 8%,#ffe0e8 0%,rgba(255,224,232,0) 72%)}
+  .wrap>*{position:relative;z-index:1}
 
-  .campus-nav { position: sticky; top: 0; z-index: 50; background: #fff; padding: 8px 10px; box-shadow: 0 2rpx 12rpx rgba(17,24,39,.06); }
-  .cn-inner { display: flex; gap: 8px; max-width: 680px; margin: 0 auto; }
-  .cn-inner button { flex: 1; border: 1px solid #ffd9c9; background: #fff1ea; color: #f2542d; font-size: 14px; font-weight: 700; padding: 9px 4px; border-radius: 999rpx; }
-  .cn-inner button:active { background: #ff6a3c; color: #fff; }
-  [id^="campus-"] { scroll-margin-top: 56px; }
-  .qr-card { position: relative; }
-  .qr-card::after { content: "🔍"; position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; line-height: 24px; text-align: center; background: rgba(255,106,60,.92); border-radius: 50%; font-size: 13px; color: #fff; pointer-events: none; }
-  .lb .lb-save { margin-top: 16px; background: #ff6a3c; color: #fff; border: none; font-size: 15px; font-weight: 700; padding: 11px 28px; border-radius: 999rpx; }
-  .lb .lb-save:active { background: #f2542d; }
+  /* ================= 顶栏 ================= */
+  .nav{position:sticky;top:0;z-index:60;background:rgba(255,250,244,.9);
+    backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:10px;padding:10px 16px;max-width:680px;margin:0 auto}
+  .nav-logo{width:30px;height:30px;flex:none;border-radius:10px;display:grid;place-items:center;
+    background:var(--grad);box-shadow:0 4px 12px rgba(255,90,40,.28)}
+  .nav-logo svg{width:17px;height:17px;fill:#fff}
+  .nav-t{font-size:15px;font-weight:800;letter-spacing:.4px}
+  .nav-t span{display:block;font-size:10.5px;font-weight:600;color:var(--ink3);letter-spacing:0}
+  .nav-badge{margin-left:auto;flex:none;font-size:11px;font-weight:700;color:#b8430d;
+    background:var(--soft);border:1px solid var(--bd);border-radius:999px;padding:5px 10px}
+
+  /* ================= 主标题（预约打印为第一目的） ================= */
+  .head{padding:20px 16px 4px}
+  .eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:1.5px;
+    color:#b8430d;text-transform:uppercase}
+  .eyebrow i{width:16px;height:2px;background:var(--brand);display:block;border-radius:2px}
+  h1{margin:10px 0 0;font-size:30px;line-height:1.25;font-weight:900;letter-spacing:-.5px}
+  h1 mark{background:none;color:var(--brand);position:relative;padding:0 2px}
+  h1 mark::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:9px;z-index:-1;border-radius:3px;
+    background:linear-gradient(90deg,#ffd9c2,#ffe2d6)}
+  .lead{margin:10px 0 0;font-size:13.5px;color:var(--ink2);line-height:1.75;max-width:34em}
+  .howto{display:flex;gap:8px;margin-top:14px}
+  .howto div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 6px;
+    text-align:center;box-shadow:var(--sh)}
+  .howto svg{width:18px;height:18px;stroke:var(--brand);fill:none;stroke-width:1.8;margin:0 auto 4px;display:block}
+  .howto b{display:block;font-size:12px;font-weight:800}
+  .howto span{display:block;font-size:10.5px;color:var(--ink3);margin-top:2px}
+
+  /* ================= 校区切换 ================= */
+  .segbar{position:sticky;top:51px;z-index:55;background:rgba(255,250,244,.94);
+    backdrop-filter:blur(8px);padding:12px 16px 10px}
+  .seg{display:flex;gap:6px;background:#f6ece1;border-radius:14px;padding:4px}
+  .seg button{flex:1;min-width:0;padding:9px 2px;border-radius:11px;font-size:12.5px;font-weight:800;
+    color:var(--ink2);transition:color .2s ease,background .2s ease,box-shadow .2s ease;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+  .seg button .n{display:block;font-size:10px;font-weight:600;opacity:.6;margin-top:1px}
+  .seg button.on{background:var(--card);color:#c0390c;box-shadow:0 2px 8px rgba(60,40,25,.10)}
+  .seg button.on .n{opacity:.75}
+
+  /* ================= 点位网格 ================= */
+  .panel{display:none;padding:2px 16px 0}
+  .panel.on{display:block;animation:fade .28s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .p-head{display:flex;align-items:baseline;gap:10px;margin:4px 2px 12px}
+  .p-head h2{margin:0;font-size:17px;font-weight:900;letter-spacing:-.2px}
+  .p-head .cnt{font-size:11px;font-weight:700;color:#b8430d;background:var(--soft);
+    border:1px solid var(--bd);padding:4px 9px;border-radius:999px}
+  .p-tip{margin:0 2px 12px;font-size:12.5px;color:var(--ink3);line-height:1.7}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 6px 11px;
+    text-align:center;box-shadow:var(--sh);position:relative;
+    transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+  @keyframes pop{from{transform:scale(.97)}to{transform:none}}
+  .panel.on .tile{animation:pop .24s ease both}
+  .tile:active{transform:scale(.965);border-color:var(--bd);box-shadow:0 1px 5px rgba(60,40,25,.08)}
+  .tile .qr{width:100%;max-width:118px;margin:0 auto;border-radius:10px}
+  .tile .nm{margin-top:8px;font-size:13px;font-weight:800;line-height:1.32}
+  .tile .zoom{position:absolute;top:7px;right:7px;width:22px;height:22px;border-radius:50%;
+    background:rgba(255,106,24,.92);display:grid;place-items:center;box-shadow:0 2px 6px rgba(255,106,24,.32)}
+  .tile .zoom svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2}
+
+  /* ================= 楼栋搜索 ================= */
+  #locBar{margin:0 16px 12px}
+  .srch{display:flex;align-items:center;gap:8px;background:#fff;
+    border:1px solid var(--line);border-radius:13px;padding:10px 12px}
+  .srch svg{width:16px;height:16px;flex:none;stroke:var(--ink3);fill:none;stroke-width:2}
+  .srch input{flex:1;min-width:0;border:0;outline:none;font-size:13.5px;font-weight:600;
+    background:none;color:var(--ink);padding:0}
+  .srch input::placeholder{color:#b3a79c;font-weight:500}
+  .empty{padding:26px 12px;text-align:center;color:var(--ink3);font-size:13px}
+
+  /* ================= 免费打印：广告位 ================= */
+  .adcard{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:14px;border-radius:var(--r);
+    background:linear-gradient(135deg,#fff6ef,#ffe9dc);border:1px dashed #ffbf9f;
+    transition:transform .16s ease}
+  .adcard:active{transform:scale(.985)}
+  .adcard .ic{width:42px;height:42px;flex:none;border-radius:13px;display:grid;place-items:center;
+    background:var(--grad);box-shadow:0 4px 12px rgba(255,90,40,.3)}
+  .adcard .ic svg{width:20px;height:20px;fill:#fff}
+  .adcard .tx{flex:1;min-width:0}
+  .adcard .tx b{display:block;font-size:14px;font-weight:900;color:#b8430d}
+  .adcard .tx span{display:block;font-size:11.5px;color:#8a5a45;margin-top:3px;line-height:1.55}
+  .adcard .go{flex:none;font-size:12px;font-weight:900;color:#fff;background:var(--grad);
+    padding:8px 13px;border-radius:999px}
+
+  /* ================= 免费打印：活动板块 ================= */
+  .free{margin:26px 16px 0;border-radius:20px;padding:20px 16px 22px;background:var(--card);
+    border:1px solid var(--line);box-shadow:var(--sh)}
+  .free-h{display:flex;align-items:center;gap:10px}
+  .free-h .ic{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;
+    background:var(--grad);box-shadow:0 4px 12px rgba(255,90,40,.28)}
+  .free-h .ic svg{width:17px;height:17px;fill:#fff}
+  .free-h b{font-size:16px;font-weight:900}
+  .free-h span{display:block;font-size:11px;color:var(--ink3);font-weight:600}
+  .free-tag{margin-left:auto;flex:none;font-size:10px;font-weight:800;letter-spacing:.5px;color:var(--ink3);
+    border:1px solid var(--line);border-radius:6px;padding:3px 7px}
+  .steps{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+  .step{display:flex;gap:11px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px}
+  .step .no{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;
+    font-size:13px;font-weight:900;color:#fff;background:var(--grad)}
+  .step .bd{flex:1;min-width:0}
+  .step .bd b{display:block;font-size:14px;font-weight:900;margin-bottom:3px}
+  .step .bd span{font-size:12.5px;color:var(--ink2);line-height:1.7}
+  .caps{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .caps i{font-style:normal;font-size:11px;font-weight:700;color:#b8430d;background:var(--soft);
+    border:1px solid var(--bd);padding:3px 8px;border-radius:999px}
+  .shot{margin-top:13px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
+  .shot-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .shot-h b{font-size:13px;font-weight:900}
+  .shot-h em{font-style:normal;font-size:11px;color:var(--ink3)}
+  .shot-img{position:relative;max-height:220px;overflow:hidden;cursor:pointer}
+  .shot-img img{width:100%}
+  .shot-img::after{content:"";position:absolute;inset:auto 0 0 0;height:64px;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.96))}
+  .shot-more{position:absolute;left:0;right:0;bottom:9px;text-align:center;font-size:12px;font-weight:800;
+    color:#c0390c;z-index:2}
+
+  /* ===== 免费打印：左规则 · 右真实案例（同屏并排） ===== */
+  .split{display:flex;gap:11px;margin-top:14px;align-items:stretch}
+  .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
+  .col-h{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:900;color:#b8430d}
+  .col-h i{font-style:normal;font-size:10px;font-weight:800;color:#fff;background:var(--grad);
+    padding:2px 7px;border-radius:999px;letter-spacing:.3px}
+  .col-h em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--ink3);margin-left:auto}
+  .rule{display:flex;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:10px}
+  .rule .no{width:22px;height:22px;flex:none;border-radius:50%;display:grid;place-items:center;
+    font-size:11.5px;font-weight:900;color:#fff;background:var(--grad)}
+  .rule .bd{flex:1;min-width:0}
+  .rule .bd b{display:block;font-size:12.5px;font-weight:900;line-height:1.45}
+  .rule .bd span{display:block;font-size:11px;color:var(--ink2);line-height:1.65;margin-top:2px}
+  .case{margin:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;
+    position:relative;cursor:pointer;flex:1;min-height:210px}
+  .case img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+  .case .tag{position:absolute;top:8px;left:8px;z-index:2;font-size:10px;font-weight:900;color:#fff;
+    background:rgba(28,25,23,.62);backdrop-filter:blur(4px);padding:4px 8px;border-radius:999px}
+  .case .cd{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:20px 9px 9px;text-align:center;
+    font-size:11.5px;font-weight:900;color:#c0390c;
+    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.97) 62%)}
+  .casetip{display:flex;gap:7px;margin-top:9px;background:#fff8f2;border:1px dashed #ffc7a6;
+    border-radius:12px;padding:9px 11px;font-size:11.5px;color:#8a5a45;line-height:1.65}
+  .casetip b{color:#b8430d}
+
+  /* ===== A 方案：明示复制按钮 ===== */
+  .copycard{margin-top:13px;background:linear-gradient(135deg,#fff6ef,#ffe9dc);
+    border:1px solid #ffd0b4;border-radius:14px;padding:13px;display:flex;align-items:center;gap:12px}
+  .copycard .tx{flex:1;min-width:0}
+  .copycard .tx b{display:block;font-size:13.5px;font-weight:900;color:#b8430d}
+  .copycard .tx span{display:block;font-size:11px;color:#8a5a45;margin-top:2px;line-height:1.5}
+  .copycard .btn{flex:none;font-size:13.5px;font-weight:900;color:#fff;background:var(--grad);
+    padding:11px 15px;border-radius:999px;box-shadow:0 4px 12px rgba(255,90,40,.26);
+    transition:transform .14s ease}
+  .copycard .btn:active{transform:scale(.96)}
+  .copyhint{margin-top:8px;font-size:10.5px;color:#a87b5f;line-height:1.6}
+
+  @media (max-width:400px){
+    .split{flex-direction:column}
+    .case{min-height:300px}
+  }
+  .faq{margin-top:13px}
+  .faq details{border-top:1px solid var(--line);padding:11px 0}
+  .faq details:last-child{border-bottom:1px solid var(--line)}
+  .faq summary{font-size:13.5px;font-weight:800;list-style:none;display:flex;justify-content:space-between;
+    align-items:center;cursor:pointer;gap:10px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary svg{width:14px;height:14px;flex:none;stroke:var(--brand);fill:none;stroke-width:2.2;
+    transition:transform .2s ease}
+  .faq details[open] summary svg{transform:rotate(45deg)}
+  .faq p{margin:8px 0 0;font-size:12.5px;color:var(--ink2);line-height:1.75}
+  .free-cta{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px;
+    background:var(--grad);color:#fff;font-size:14.5px;font-weight:900;padding:13px;border-radius:999px;
+    box-shadow:0 6px 16px rgba(255,90,40,.28);transition:transform .14s ease}
+  .free-cta:active{transform:scale(.975)}
+  .free-cta svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2}
+
+  .foot{text-align:center;font-size:11px;color:#a89c90;padding:24px 18px 8px;line-height:1.85}
+
+  /* ================= 底部活动条 ================= */
+  .dock{position:fixed;left:0;right:0;bottom:0;z-index:70;pointer-events:none;
+    padding:8px 16px calc(8px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(255,250,244,0),rgba(255,250,244,.94) 36%)}
+  .dock-in{max-width:680px;margin:0 auto;pointer-events:auto}
+  .dock-btn{width:100%;display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--bd);
+    padding:9px 12px;border-radius:999px;box-shadow:0 6px 18px rgba(60,40,25,.10);
+    transition:transform .14s ease}
+  .dock-btn:active{transform:scale(.98)}
+  .dock-btn .ic{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;background:var(--grad)}
+  .dock-btn .ic svg{width:14px;height:14px;fill:#fff}
+  .dock-btn b{font-size:12.5px;font-weight:900;color:#b8430d}
+  .dock-btn span{font-size:11px;color:var(--ink3);display:block;font-weight:600}
+  .dock-btn .go{margin-left:auto;flex:none;font-size:11.5px;font-weight:900;color:#fff;background:var(--grad);
+    padding:7px 12px;border-radius:999px}
+
+  /* ================= 抽屉 ================= */
+  .mask{position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:90;opacity:0;visibility:hidden;
+    transition:opacity .26s ease,visibility .26s}
+  .mask.on{opacity:1;visibility:visible}
+  .sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);width:100%;max-width:680px;
+    background:#fff;border-radius:22px 22px 0 0;z-index:95;display:flex;flex-direction:column;max-height:88vh;
+    transition:transform .3s cubic-bezier(.22,.8,.28,1);box-shadow:0 -10px 40px rgba(28,25,23,.22);
+    padding-bottom:env(safe-area-inset-bottom)}
+  .sheet.on{transform:translate(-50%,0)}
+  .sh-grab{flex:none;padding:9px 0 3px;display:grid;place-items:center}
+  .sh-grab i{width:38px;height:4px;border-radius:99px;background:#e6ddd2;display:block}
+  .sh-head{flex:none;display:flex;align-items:center;padding:4px 18px 10px;gap:10px}
+  .sh-head b{font-size:16px;font-weight:900}
+  .sh-head span{font-size:11.5px;color:var(--ink3);margin-top:2px;display:block}
+  .sh-x{margin-left:auto;width:30px;height:30px;flex:none;border-radius:50%;background:#f5efe8;color:var(--ink2);
+    font-size:18px;line-height:1;display:grid;place-items:center}
+  .sh-body{overflow:auto;padding:0 18px 18px;-webkit-overflow-scrolling:touch}
+  .sh-qr{width:230px;margin:2px auto 0;border-radius:16px;border:1px solid var(--line);padding:8px;background:#fff}
+  .sh-steps{margin-top:14px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+  .sh-steps div{display:flex;gap:8px;font-size:12.5px;color:var(--ink2);line-height:1.9}
+  .sh-steps i{font-style:normal;color:var(--brand);font-weight:900}
+  .sh-btns{display:flex;gap:10px;margin-top:14px}
+  .sh-btns a,.sh-btns button{flex:1;text-align:center;font-size:14px;font-weight:900;padding:13px;
+    border-radius:999px;transition:transform .14s ease}
+  .sh-btns a{background:var(--grad);color:#fff;box-shadow:0 6px 16px rgba(255,90,40,.26)}
+  .sh-btns button{background:#f5efe8;color:var(--ink2)}
+  .sh-btns a:active,.sh-btns button:active{transform:scale(.975)}
+  .wm{margin-top:12px;font-size:11px;color:var(--ink3);text-align:center;line-height:1.7}
+  .wm b{color:var(--ok)}
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  }
+  @media (max-width:359px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    h1{font-size:26px}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-<div class="campus-nav"><div class="cn-inner"><button data-go="xm">厦门大学</button><button data-go="qz">泉州医高专</button><button data-go="yg">阳光学院</button></div></div>
-<section style="font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif;color:#2b2f3a;line-height:1.7;max-width:680px;margin:0 auto;padding:18px"><div style="background:linear-gradient(135deg,#ff6a3c,#f2542d);color:#fff;border-radius:16px;padding:22px 18px;text-align:center;margin-bottom:8px"><div style="font-size:21px;font-weight:800">📍 在校随时打印 · 扫码即打</div><div style="font-size:14px;opacity:.9;margin-top:8px">3 个校区 · 16 个扫码点，找到你所在的楼栋长按二维码即可下单</div></div><p style="font-size:14px;color:#6b7280;margin:16px 2px 4px">👇 滑到你的校区，点击对应楼栋的二维码放大，再长按识别即可打印。</p><div style="margin:22px 0"><div id="campus-xm" style="background:linear-gradient(135deg,#ff6a3c,#f2542d);color:#fff;font-size:18px;font-weight:700;padding:13px 16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center"><span>厦门大学</span><span style="font-size:13px;opacity:.9;font-weight:400">11 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="1.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">博学3栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="2.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="3.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学武楼2号</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="4.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="5.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪5栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="6.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">映雪3栋</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="7.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">笃行2栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="8.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉5栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="9.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学生活动中心</div></div></td></tr><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="10.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">芙蓉9栋</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="11.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">学武1号</div></div></td><td width="33.33%" style="padding:5px"></td></tr></table></div><div style="margin:22px 0"><div id="campus-qz" <div <span style="font-size:13px;opacity:.9;font-weight:400">3 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="12.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">2号楼求真楼</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="13.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">13号楼精诚B</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="14.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">15号精诚苑D</div></div></td></tr></table></div><div style="margin:22px 0"><div id="campus-yg" <div <span style="font-size:13px;opacity:.9;font-weight:400">2 个点位</span></div><table width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:8px 0"><tr><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="15.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">宿舍楼A4</div></div></td><td width="33.33%" style="padding:5px;vertical-align:top"><div style="background:#ffffff;border:1px solid #eef0f5;border-radius:12px;padding:10px 4px;text-align:center"><img src="16.jpg" style="width:100%;max-width:108px;display:block;margin:0 auto;border-radius:8px"><div style="font-size:13px;font-weight:700;color:#2b2f3a;margin-top:8px;line-height:1.3">教学楼2楼</div></div></td><td width="33.33%" style="padding:5px"></td></tr></table></div><div style="background:#f6f8ff;border-left:4px solid #ff6a3c;border-radius:10px;padding:14px 16px;margin:24px 0;font-size:14px;color:#3a4256"><b style="color:#ff6a3c">使用步骤</b><br>① 找到你所在楼栋的二维码　② 长按识别　③ 选文件下单　④ 到机器取件<br><span style="color:#e0533d">任何打印问题（无论打多少页、打到哪一步）全额退款。</span></div><div style="background:#fff7f0;border-left:4px solid #ff8a3d;border-radius:10px;padding:14px 16px;margin:24px 0;font-size:14px;color:#3a4256"><b style="color:#ff6a3d">🙋 客服联系</b><br>如果二维码扫不出来、打印遇上任何问题，或有其他疑问，<b>直接在这公众号对话框给我们发消息</b>即可，客服会尽快回复帮你解决。<span style="color:#9aa0b0">（非工作时间留言，也会在恢复后第一时间处理）</span></div><div style="text-align:center;font-size:13px;color:#9aa0b0;margin:18px 0 6px">公众号回复「厦大 / 泉医 / 阳光」也可获取对应校区二维码</div></section>
+
+  <!-- 顶栏 -->
+  <div class="nav"><div class="nav-in">
+    <div class="nav-logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M7 9V3h10v6H7zm0 8H5V11h14v6h-2v4H7v-4zm2-6h6v2H9v-2z"/></svg>
+    </div>
+    <div class="nav-t">小沉淀自助打印<span>扫码下单 · 自助机取件</span></div>
+    <div class="nav-badge">3 校区 · 16 点位</div>
+  </div></div>
+
+  <!-- 主标题：预约打印为第一目的 -->
+  <header class="head">
+    <span class="eyebrow"><i></i>扫码即打</span>
+    <div class="howto">
+      <div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <b>选楼栋</b><span>16 个点位</span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V5a1 1 0 0 1 1-1h4l2 2h8a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3"/><path d="M3 8h4v8H3zM7 8h4v8H7z"/></svg>
+        <b>扫二维码</b><span>长按识别</span>
+      </div>
+      <div>
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <b>取件</b><span>到机即取</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 楼栋搜索 -->
+  <div id="locBar">
+    <div class="srch">
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg>
+      <input id="q" type="search" inputmode="search" autocomplete="off"
+             placeholder="搜楼栋名，如 芙蓉、映雪、求真楼" aria-label="搜索楼栋">
+    </div>
+  </div>
+
+  <!-- 校区切换 -->
+  <div class="segbar"><div class="seg" id="seg" role="tablist">
+    <button data-p="xm" class="on" role="tab">厦门大学<span class="n">11 个点位</span></button>
+    <button data-p="qz" role="tab">泉州医高专<span class="n">3 个点位</span></button>
+    <button data-p="yg" role="tab">阳光学院<span class="n">2 个点位</span></button>
+  </div></div>
+
+  <!-- 面板：厦门大学 -->
+  <section class="panel on" id="p-xm">
+    <div class="p-head"><h2>厦门大学</h2><span class="cnt">11 个点位</span></div>
+    <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
+    <div class="grid" data-grid="xm"></div>
+    <a class="adcard" href="#free" data-free="1">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
+      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
+      <div class="go">去了解</div>
+    </a>
+  </section>
+
+  <!-- 面板：泉州医高专 -->
+  <section class="panel" id="p-qz">
+    <div class="p-head"><h2>泉州医高专</h2><span class="cnt">3 个点位</span></div>
+    <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
+    <div class="grid" data-grid="qz"></div>
+    <a class="adcard" href="#free" data-free="1">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
+      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
+      <div class="go">去了解</div>
+    </a>
+  </section>
+
+  <!-- 面板：阳光学院 -->
+  <section class="panel" id="p-yg">
+    <div class="p-head"><h2>阳光学院</h2><span class="cnt">2 个点位</span></div>
+    <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
+    <div class="grid" data-grid="yg"></div>
+    <a class="adcard" href="#free" data-free="1">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
+      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
+      <div class="go">去了解</div>
+    </a>
+  </section>
+
+  <!-- 面板：搜索结果 -->
+  <section class="panel" id="p-srch"></section>
+
+  <!-- 免费打印：广告填充板块 -->
+  <section class="free" id="free">
+    <div class="free-h">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
+      <div><b>免费打印活动</b><span>领红包下单，打印费原路退回</span></div>
+      <div class="free-tag">活动</div>
+    </div>
+
+    <div class="split">
+      <!-- 左：规则（怎么参加） -->
+      <div class="col">
+        <div class="col-h"><i>规则</i>怎么参加</div>
+        <div class="rule"><div class="no">1</div><div class="bd">
+          <b>下单前先领红包</b>
+          <span>在公众号菜单点开外卖 / 打车红包，从红包入口完成下单。</span>
+          <div class="caps"><i>外卖红包</i><i>打车红包</i></div>
+        </div></div>
+        <div class="rule"><div class="no">2</div><div class="bd">
+          <b>打印后发两张截图</b>
+          <span>打印订单截图 + 用了红包那笔订单截图，发到公众号对话框。</span>
+          <div class="caps"><i>打印订单</i><i>红包订单</i></div>
+        </div></div>
+        <div class="rule"><div class="no">3</div><div class="bd">
+          <b>打印费原路退回</b>
+          <span>客服核实后按原支付路径退回，多笔订单可累计合并，上不封顶。</span>
+          <div class="caps"><i>可累计</i><i>上不封顶</i></div>
+        </div></div>
+      </div>
+
+      <!-- 右：真实案例（同屏对照） -->
+      <div class="col">
+        <div class="col-h"><i>真实案例</i>照着做就行<em>点图看大图</em></div>
+        <figure class="case" id="openCase" role="button" tabindex="0" aria-label="查看免费打印真实对话案例大图">
+          <span class="tag">真实对话</span>
+          <img src="17.jpg" alt="免费打印实操对话案例：发打印订单截图 + 红包订单截图，客服核实后原路退回" loading="lazy">
+          <figcaption class="cd">点击查看完整对话 ›</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="casetip">
+      <span aria-hidden="true">💬</span>
+      <span>看不懂规则没关系，<b>照右边的对话做就行</b>：把两张截图发给客服，剩下的交给我们。</span>
+    </div>
+
+    <!-- A 方案：明示复制外卖口令 -->
+    <div class="copycard">
+      <div class="tx"><b>复制外卖红包口令</b><span>点一下，打开美团/饿了么 APP 自动弹红包</span></div>
+      <button class="btn" id="copyBtn" aria-label="复制外卖红包口令">复制</button>
+    </div>
+    <p class="copyhint">本链接为推广链接，平台会给我们返利，<b>不影响你的红包金额</b>。复制后去外卖 APP 即可使用。</p>
+
+    <div class="faq">
+      <details open><summary>红包在哪里领？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>在公众号对话框底部菜单「领红包」里，外卖和打车各有一个入口。下单前点一下即可，不用额外注册。</p></details>
+      <details><summary>截图要发哪两张？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>一张是打印订单完成页（能看到金额），一张是通过红包入口下单的那笔订单（能看到已用红包）。两张一起发到公众号对话框即可。</p></details>
+      <details><summary>多笔订单能一起算吗？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>可以。多笔订单的打印费可以累计合并后一次性退回，上不封顶。</p></details>
+      <details><summary>多久能退到？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>客服核实截图后按原支付路径退回。非工作时间留言，恢复后第一时间处理。</p></details>
+    </div>
+
+    <a class="free-cta" href="https://HP3327.github.io/free-print/" target="_blank" rel="noopener">
+      查看活动完整规则
+      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <div class="foot">打印过程中遇到任何问题，无论打多少页、打到哪一步，均可全额退款<br>
+    活动最终解释权在规则范围内由本公众号所有 · 疑问请通过公众号对话框联系我们</div>
 </div>
-<div class="lb" id="lb">
-  <div class="lb-close" id="lbClose">×</div>
-  <img id="lbImg" src="" alt="二维码">
-  <div class="lb-tip">长按上方二维码 → 点「识别二维码」即可下单打印<br>或点下方按钮保存图片，用微信「扫一扫」从相册识别</div>
-  <button class="lb-save" id="lbSave">保存图片</button>
+
+<!-- 底部活动条 -->
+<div class="dock"><div class="dock-in">
+  <button class="dock-btn" id="dockBtn">
+    <span class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></span>
+    <span><b>免费打印活动</b><span>领红包下单 · 打印费原路退回</span></span>
+    <span class="go">去看看</span>
+  </button>
+</div></div>
+
+<!-- 抽屉 -->
+<div class="mask" id="mask"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+  <div class="sh-grab"><i></i></div>
+  <div class="sh-head">
+    <div><b id="shTitle">二维码</b><span id="shSub">长按识别即可下单</span></div>
+    <button class="sh-x" id="shX" aria-label="关闭">×</button>
+  </div>
+  <div class="sh-body" id="shBody"></div>
 </div>
+
 <script>
-  (function(){
-    var lb = document.getElementById('lb');
-    var lbImg = document.getElementById('lbImg');
-    var imgs = document.querySelectorAll('.wrap img');
-    for (var i = 0; i < imgs.length; i++){
-      imgs[i].classList.add('qr');
-      if(imgs[i].parentElement) imgs[i].parentElement.classList.add('qr-card');
-      imgs[i].addEventListener('click', function(){
-        lbImg.src = this.src;
-        lb.classList.add('show');
+(function(){
+  var DATA = {
+    xm: [['1.jpg','博学3栋'],['2.jpg','芙蓉2栋'],['3.jpg','学武楼2号'],['4.jpg','映雪2栋'],
+         ['5.jpg','映雪5栋'],['6.jpg','映雪3栋'],['7.jpg','笃行2栋'],['8.jpg','芙蓉5栋'],
+         ['9.jpg','学生活动中心'],['10.jpg','芙蓉9栋'],['11.jpg','学武1号']],
+    qz: [['12.jpg','2号楼求真楼'],['13.jpg','13号楼精诚B'],['14.jpg','15号精诚苑D']],
+    yg: [['15.jpg','宿舍楼A4'],['16.jpg','教学楼2楼']]
+  };
+  var GRID_NAME = {xm:'厦门大学', qz:'泉州医高专', yg:'阳光学院'};
+  var ZOOM = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">'+
+             '<circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5M11 8.5v5M8.5 11h5"/></svg>';
+
+  function tileHTML(f, n, i, meta){
+    return '<button class="tile" data-qr="'+esc(f)+'" data-nm="'+esc(n)+'" '+
+           'style="animation-delay:'+Math.min(i,4)*24+'ms" aria-label="'+esc(n)+' 二维码，点击放大">'+
+           '<span class="zoom">'+ZOOM+'</span>'+
+           '<img class="qr" src="'+esc(f)+'" alt="'+esc(meta||'')+esc(n)+'点位二维码">'+
+           '<span class="nm">'+esc(n)+'</span></button>';
+  }
+  function render(key){
+    var grid = document.querySelector('[data-grid="'+key+'"]');
+    if(!grid) return;
+    var html = '';
+    (DATA[key]||[]).forEach(function(it,i){ html += tileHTML(it[0], it[1], i, ''); });
+    grid.innerHTML = html;
+  }
+  Object.keys(DATA).forEach(render);
+
+  var panels = {xm:'p-xm', qz:'p-qz', yg:'p-yg'};
+  var segs = [].slice.call(document.querySelectorAll('#seg button'));
+  var cur = 'xm';
+  function go(key){
+    cur = key;
+    Object.keys(panels).forEach(function(k){
+      document.getElementById(panels[k]).classList.toggle('on', k===key);
+    });
+    segs.forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-p')===key);
+    });
+  }
+  segs.forEach(function(b){
+    b.addEventListener('click', function(){ go(b.getAttribute('data-p')); apply(); });
+  });
+
+  /* ===== 搜楼栋：命中则只留那一个点位 ===== */
+  var qEl = document.getElementById('q');
+  function allItems(){
+    var out = [];
+    Object.keys(DATA).forEach(function(k){
+      DATA[k].forEach(function(it){ out.push({k:k, f:it[0], n:it[1]}); });
+    });
+    return out;
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function apply(){
+    var q = (qEl.value||'').trim().toLowerCase();
+    if(!q){
+      Object.keys(panels).forEach(function(k){
+        document.getElementById(panels[k]).classList.toggle('on', k===cur);
       });
-    }
-    function closeLb(){ lb.classList.remove('show'); }
-    document.getElementById('lbClose').addEventListener('click', closeLb);
-    lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
-    document.getElementById('lbSave').addEventListener('click', function(e){ e.stopPropagation(); window.location.href = lbImg.src; });
-    var navBtns = document.querySelectorAll('.campus-nav button');
-    for (var k = 0; k < navBtns.length; k++){
-      navBtns[k].addEventListener('click', function(){
-        var el = document.getElementById('campus-' + this.getAttribute('data-go'));
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector('.segbar').style.display = '';
+      Object.keys(DATA).forEach(function(k){
+        var g = document.querySelector('[data-grid="'+k+'"]');
+        if(g && !g.innerHTML) render(k);
       });
+      return;
     }
+    var hits = allItems().filter(function(it){
+      return (it.n + ' ' + GRID_NAME[it.k]).toLowerCase().indexOf(q) >= 0;
+    });
+    if(!hits.length) hits = [];          // 无匹配：下面渲染空态
+    document.querySelector('.segbar').style.display = 'none';
+    Object.keys(panels).forEach(function(k){
+      document.getElementById(panels[k]).classList.remove('on');
+    });
+    var host = document.getElementById('p-srch');
+    host.classList.add('on');
+    host.innerHTML = '<div class="p-head"><h2>搜索结果</h2><span class="cnt">'+hits.length+' 个点位</span></div>'+
+      (hits.length
+        ? '<p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p><div class="grid" id="srchGrid"></div>'
+        : '<div class="empty">没搜到这个楼栋。<br>换个关键词试试，比如 芙蓉、映雪、求真楼。</div>');
+    if(hits.length){
+      var g = document.getElementById('srchGrid'), html = '';
+      hits.forEach(function(it,i){
+        html += tileHTML(it.f, it.n, i, GRID_NAME[it.k] + ' · ');
+      });
+      g.innerHTML = html;
+    }
+  }
+  var tmr;
+  qEl.addEventListener('input', function(){
+    clearTimeout(tmr); tmr = setTimeout(apply, 160);
+  });
+
+  function scrollToFree(e){
+    e.preventDefault();
+    var el = document.getElementById('free');
+    window.scrollTo({top: el.getBoundingClientRect().top + window.pageYOffset - 62, behavior:'smooth'});
+  }
+  document.querySelectorAll('[data-free]').forEach(function(a){
+    a.addEventListener('click', scrollToFree);
+  });
+  document.getElementById('dockBtn').addEventListener('click', scrollToFree);
+
+  var h = (location.hash||'').replace('#','');
+  if(panels[h]) go(h);
+  window.addEventListener('hashchange', function(){
+    var k = (location.hash||'').replace('#','');
+    if(panels[k]) go(k);
+  });
+
+  var mask=document.getElementById('mask'), sheet=document.getElementById('sheet'),
+      shTitle=document.getElementById('shTitle'), shSub=document.getElementById('shSub'),
+      shBody=document.getElementById('shBody');
+  function open(){ mask.classList.add('on'); sheet.classList.add('on'); document.body.style.overflow='hidden'; }
+  function close(){ mask.classList.remove('on'); sheet.classList.remove('on'); document.body.style.overflow=''; }
+  mask.addEventListener('click', close);
+  document.getElementById('shX').addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+
+  function openQR(src, nm){
+    shTitle.textContent = nm;
+    shSub.textContent = '长按二维码识别 → 选文件下单';
+    shBody.innerHTML =
+      '<img class="sh-qr" src="'+src+'" alt="'+nm+'点位二维码">'+
+      '<div class="sh-steps">'+
+        '<div><i>①</i><span>长按上方二维码，选「识别二维码」</span></div>'+
+        '<div><i>②</i><span>选好文件提交下单，到自助机取件</span></div>'+
+        '<div><i>③</i><span>识别不出？截图后用微信扫一扫从相册识别</span></div>'+
+      '</div>'+
+      '<div class="sh-btns"><button data-close="1">关闭</button></div>'+
+      '<div class="wm">任何打印问题，无论打多少页、打到哪一步，<b>全额退款</b></div>';
+    open();
+  }
+  function openShot(){
+    shTitle.textContent = '免费打印实操对话';
+    shSub.textContent = '上下滑动查看完整对话';
+    shBody.innerHTML =
+      '<img src="17.jpg" style="width:100%;border-radius:14px;border:1px solid #f0e4d8" alt="免费打印实操对话案例">'+
+      '<div class="sh-steps">'+
+        '<div><i>①</i><span>下单前先在公众号菜单领外卖 / 打车红包，从红包入口下单</span></div>'+
+        '<div><i>②</i><span>打印完成后，把「打印订单截图」和「红包订单截图」发给客服</span></div>'+
+        '<div><i>③</i><span>客服核实后按原支付路径退回，多笔可累计，上不封顶</span></div>'+
+      '</div>'+
+      '<div class="sh-btns"><button data-close="1">关闭</button></div>';
+    open();
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target, c = t.closest && t.closest.bind(t);
+    if(!c) return;
+    var tile = c('.tile');
+    if(tile){ openQR(tile.getAttribute('data-qr'), tile.getAttribute('data-nm')); return; }
+    if(c('[data-close]')){ close(); return; }
+    if(c('#openCase') || c('#openShot') || t.id==='openShot2'){ openShot(); return; }
+  });
+  document.addEventListener('keydown', function(e){
+    if((e.key === 'Enter' || e.key === ' ') && e.target && e.target.id === 'openCase'){
+      e.preventDefault(); openShot();
+    }
+  });
+
+  /* ===== 组合方案（C）：手动按钮 + 滑入自动复制 + 归因反馈 ===== */
+  var COPY = '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰uhNTExZWQ1NTc💰';
+  var copyBtn = document.getElementById('copyBtn');
+  function copyText(txt){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      try { navigator.clipboard.writeText(txt); return true; } catch(e){}
+    }
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly','');
+      ta.style.cssText = 'position:fixed;top:-9999px;opacity:0';
+      ta.contentEditable = true; ta.readOnly = false;
+      document.body.appendChild(ta);
+      ta.focus(); ta.setSelectionRange(0, 999999);
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    } catch(e){ return false; }
+  }
+  // 手动按钮：用户主动点（复制即复制，不加任何成功提示/变绿）
+  copyBtn.addEventListener('click', function(){
+    copyText(COPY);
+  });
+  // 自动复制：打开页面停留 2 秒后，立即写入剪贴板；无任何提示
+  (function autoCopy(){
+    if(sessionStorage.getItem('freeCopyDone')) return;
+    setTimeout(function(){
+      if(copyText(COPY)){ sessionStorage.setItem('freeCopyDone','1'); }
+    }, 2000);
   })();
+})();
 </script>
 </body>
 </html>
