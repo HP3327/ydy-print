@@ -28,7 +28,7 @@
   button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   a{color:inherit;text-decoration:none}
   :focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
-  .wrap{max-width:680px;margin:0 auto;min-height:100vh;padding-bottom:112px;position:relative;overflow-x:hidden}
+  .wrap{max-width:680px;margin:0 auto;min-height:100vh;padding-bottom:8px;position:relative;overflow-x:hidden}
   .wrap::before{content:"";position:absolute;top:0;left:-20%;right:-20%;height:420px;z-index:0;pointer-events:none;
     background:radial-gradient(60% 70% at 22% 0%,#ffe9d2 0%,rgba(255,233,210,0) 70%),
                radial-gradient(50% 60% at 88% 8%,#ffe0e8 0%,rgba(255,224,232,0) 72%)}
@@ -113,100 +113,7 @@
   .adcard .go{flex:none;font-size:12px;font-weight:900;color:#fff;background:var(--grad);
     padding:8px 13px;border-radius:999px}
 
-  /* ================= 免费打印：活动板块 ================= */
-  .free{margin:26px 16px 0;border-radius:20px;padding:20px 16px 22px;background:var(--card);
-    border:1px solid var(--line);box-shadow:var(--sh)}
-  .free-h{display:flex;align-items:center;gap:10px}
-  .free-h .ic{width:34px;height:34px;flex:none;border-radius:11px;display:grid;place-items:center;
-    background:var(--grad);box-shadow:0 4px 12px rgba(255,90,40,.28)}
-  .free-h .ic svg{width:17px;height:17px;fill:#fff}
-  .free-h b{font-size:16px;font-weight:900}
-  .free-h span{display:block;font-size:11px;color:var(--ink3);font-weight:600}
-  .free-tag{margin-left:auto;flex:none;font-size:10px;font-weight:800;letter-spacing:.5px;color:var(--ink3);
-    border:1px solid var(--line);border-radius:6px;padding:3px 7px}
-  .steps{display:flex;flex-direction:column;gap:9px;margin-top:14px}
-  .step{display:flex;gap:11px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px}
-  .step .no{width:28px;height:28px;flex:none;border-radius:50%;display:grid;place-items:center;
-    font-size:13px;font-weight:900;color:#fff;background:var(--grad)}
-  .step .bd{flex:1;min-width:0}
-  .step .bd b{display:block;font-size:14px;font-weight:900;margin-bottom:3px}
-  .step .bd span{font-size:12.5px;color:var(--ink2);line-height:1.7}
-  .caps{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-  .caps i{font-style:normal;font-size:11px;font-weight:700;color:#b8430d;background:var(--soft);
-    border:1px solid var(--bd);padding:3px 8px;border-radius:999px}
-  .shot{margin-top:13px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}
-  .shot-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line)}
-  .shot-h b{font-size:13px;font-weight:900}
-  .shot-h em{font-style:normal;font-size:11px;color:var(--ink3)}
-  .shot-img{position:relative;max-height:220px;overflow:hidden;cursor:pointer}
-  .shot-img img{width:100%}
-  .shot-img::after{content:"";position:absolute;inset:auto 0 0 0;height:64px;
-    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.96))}
-  .shot-more{position:absolute;left:0;right:0;bottom:9px;text-align:center;font-size:12px;font-weight:800;
-    color:#c0390c;z-index:2}
-
-  /* ===== 免费打印：左规则 · 右真实案例（同屏并排） ===== */
-  .split{display:flex;gap:11px;margin-top:14px;align-items:stretch}
-  .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:9px}
-  .col-h{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:900;color:#b8430d}
-  .col-h i{font-style:normal;font-size:10px;font-weight:800;color:#fff;background:var(--grad);
-    padding:2px 7px;border-radius:999px;letter-spacing:.3px}
-  .col-h em{font-style:normal;font-size:10.5px;font-weight:600;color:var(--ink3);margin-left:auto}
-  .rule{display:flex;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:10px}
-  .rule .no{width:22px;height:22px;flex:none;border-radius:50%;display:grid;place-items:center;
-    font-size:11.5px;font-weight:900;color:#fff;background:var(--grad)}
-  .rule .bd{flex:1;min-width:0}
-  .rule .bd b{display:block;font-size:12.5px;font-weight:900;line-height:1.45}
-  .rule .bd span{display:block;font-size:11px;color:var(--ink2);line-height:1.65;margin-top:2px}
-  .case{margin:0;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;
-    position:relative;cursor:pointer;flex:1;min-height:210px}
-  .case img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
-  .case .tag{position:absolute;top:8px;left:8px;z-index:2;font-size:10px;font-weight:900;color:#fff;
-    background:rgba(28,25,23,.62);backdrop-filter:blur(4px);padding:4px 8px;border-radius:999px}
-  .case .cd{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:20px 9px 9px;text-align:center;
-    font-size:11.5px;font-weight:900;color:#c0390c;
-    background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.97) 62%)}
-  .casetip{display:flex;gap:7px;margin-top:9px;background:#fff8f2;border:1px dashed #ffc7a6;
-    border-radius:12px;padding:9px 11px;font-size:11.5px;color:#8a5a45;line-height:1.65}
-  .casetip b{color:#b8430d}
-
-  @media (max-width:400px){
-    .split{flex-direction:column}
-    .case{min-height:300px}
-  }
-  .faq{margin-top:13px}
-  .faq details{border-top:1px solid var(--line);padding:11px 0}
-  .faq details:last-child{border-bottom:1px solid var(--line)}
-  .faq summary{font-size:13.5px;font-weight:800;list-style:none;display:flex;justify-content:space-between;
-    align-items:center;cursor:pointer;gap:10px}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary svg{width:14px;height:14px;flex:none;stroke:var(--brand);fill:none;stroke-width:2.2;
-    transition:transform .2s ease}
-  .faq details[open] summary svg{transform:rotate(45deg)}
-  .faq p{margin:8px 0 0;font-size:12.5px;color:var(--ink2);line-height:1.75}
-  .free-cta{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px;
-    background:var(--grad);color:#fff;font-size:14.5px;font-weight:900;padding:13px;border-radius:999px;
-    box-shadow:0 6px 16px rgba(255,90,40,.28);transition:transform .14s ease}
-  .free-cta:active{transform:scale(.975)}
-  .free-cta svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2.2}
-
   .foot{text-align:center;font-size:11px;color:#a89c90;padding:24px 18px 8px;line-height:1.85}
-
-  /* ================= 底部活动条 ================= */
-  .dock{position:fixed;left:0;right:0;bottom:0;z-index:70;pointer-events:none;
-    padding:8px 16px calc(8px + env(safe-area-inset-bottom));
-    background:linear-gradient(180deg,rgba(255,250,244,0),rgba(255,250,244,.94) 36%)}
-  .dock-in{max-width:680px;margin:0 auto;pointer-events:auto}
-  .dock-btn{width:100%;display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--bd);
-    padding:9px 12px;border-radius:999px;box-shadow:0 6px 18px rgba(60,40,25,.10);
-    transition:transform .14s ease}
-  .dock-btn:active{transform:scale(.98)}
-  .dock-btn .ic{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;background:var(--grad)}
-  .dock-btn .ic svg{width:14px;height:14px;fill:#fff}
-  .dock-btn b{font-size:12.5px;font-weight:900;color:#b8430d}
-  .dock-btn span{font-size:11px;color:var(--ink3);display:block;font-weight:600}
-  .dock-btn .go{margin-left:auto;flex:none;font-size:11.5px;font-weight:900;color:#fff;background:var(--grad);
-    padding:7px 12px;border-radius:999px}
 
   /* ================= 抽屉 ================= */
   .mask{position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:90;opacity:0;visibility:hidden;
@@ -238,6 +145,28 @@
   .wm{margin-top:12px;font-size:11px;color:var(--ink3);text-align:center;line-height:1.7}
   .wm b{color:var(--ok)}
 
+  /* ================= 顶部曝光条（打卡活动 · 明示广告 + 一键去打卡） ================= */
+  .rp{display:flex;align-items:center;gap:6px;margin:10px 16px 0;padding:8px 8px 8px 10px;border-radius:12px;
+    background:linear-gradient(135deg,#fff4e6,#ffe8d6);border:1px solid #ffd0b4;
+    transition:transform .14s ease}
+  .rp:active{transform:scale(.99)}
+  .rp-hit{flex:1;min-width:0;display:flex;align-items:center;gap:9px}
+  .rp .ri{width:26px;height:26px;flex:none;border-radius:9px;display:grid;place-items:center;
+    background:var(--grad);box-shadow:0 3px 8px rgba(255,90,40,.26)}
+  .rp .ri svg{width:14px;height:14px;fill:#fff}
+  .rp .rt{flex:1;min-width:0}
+  .rp .rt b{display:block;font-size:12.5px;font-weight:900;color:#b8430d;line-height:1.35}
+  .rp .rt span{display:block;font-size:10.5px;color:#8a5a45;margin-top:1px;line-height:1.4}
+  .rp .adv{font-style:normal;display:inline-block;font-size:9.5px;font-weight:700;color:#a1887f;
+    border:1px solid #e0cfc0;border-radius:4px;padding:0 4px;margin-left:4px;
+    vertical-align:1px;line-height:1.6;letter-spacing:.5px}
+  .rp .rx{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.78);
+    color:#a1887f;font-size:13px;line-height:1;display:grid;place-items:center;margin-left:0}
+  .rp .rb{flex:none;font-size:11.5px;font-weight:900;color:#fff;background:var(--grad);
+    padding:7px 11px;border-radius:999px;box-shadow:0 3px 9px rgba(255,90,40,.24);
+    transition:transform .14s ease}
+  .rp .rb:active{transform:scale(.96)}
+
   @media (prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   }
@@ -258,6 +187,19 @@
     <div class="nav-t">小沉淀自助打印<span>扫码下单 · 自助机取件</span></div>
     <div class="nav-badge">3 校区 · 16 点位</div>
   </div></div>
+
+  <!-- 顶部曝光条：打卡活动，一键直达打卡页 -->
+  <div class="rp" id="rpBar">
+    <a class="rp-hit" href="https://coupon-checkin.app.workbuddy.host/?sharecode=46E5NCXYTQ" target="_blank" rel="noopener" aria-label="去打卡页，每天攒 0.1 墨汁">
+      <span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2c2.2 3.6 5 6.2 5 9a5 5 0 0 1-10 0c0-2.8 2.8-5.4 5-9z"/></svg></span>
+      <div class="rt">
+        <b>打卡攒墨汁 · 抵打印费<i class="adv">广告</i></b>
+        <span>每天 +0.1，攒够 0.5 一次性抵扣</span>
+      </div>
+      <span class="rb">去打卡</span>
+    </a>
+    <button class="rx" id="rpX" aria-label="关闭提示">×</button>
+  </div>
 
   <!-- 主标题：预约打印为第一目的 -->
   <header class="head">
@@ -290,10 +232,10 @@
     <div class="p-head"><h2>厦门大学</h2><span class="cnt">11 个点位</span></div>
     <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
     <div class="grid" data-grid="xm"></div>
-    <a class="adcard" href="#free" data-free="1">
+    <a class="adcard" href="https://coupon-checkin.app.workbuddy.host/?sharecode=46E5NCXYTQ" target="_blank" rel="noopener">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
-      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
-      <div class="go">去了解</div>
+      <div class="tx"><b>打卡攒墨汁，打印时抵扣</b><span>每天 0.1 · 攒够 0.5 抵打印费</span></div>
+      <div class="go">去打卡</div>
     </a>
   </section>
 
@@ -302,10 +244,10 @@
     <div class="p-head"><h2>泉州医高专</h2><span class="cnt">3 个点位</span></div>
     <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
     <div class="grid" data-grid="qz"></div>
-    <a class="adcard" href="#free" data-free="1">
+    <a class="adcard" href="https://coupon-checkin.app.workbuddy.host/?sharecode=46E5NCXYTQ" target="_blank" rel="noopener">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
-      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
-      <div class="go">去了解</div>
+      <div class="tx"><b>打卡攒墨汁，打印时抵扣</b><span>每天 0.1 · 攒够 0.5 抵打印费</span></div>
+      <div class="go">去打卡</div>
     </a>
   </section>
 
@@ -314,87 +256,18 @@
     <div class="p-head"><h2>阳光学院</h2><span class="cnt">2 个点位</span></div>
     <p class="p-tip">点楼栋卡片放大二维码，长按识别即可下单。</p>
     <div class="grid" data-grid="yg"></div>
-    <a class="adcard" href="#free" data-free="1">
+    <a class="adcard" href="https://coupon-checkin.app.workbuddy.host/?sharecode=46E5NCXYTQ" target="_blank" rel="noopener">
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
-      <div class="tx"><b>打印费还能退回来</b><span>领红包下单 → 发两张截图 → 打印费原路退回</span></div>
-      <div class="go">去了解</div>
+      <div class="tx"><b>打卡攒墨汁，打印时抵扣</b><span>每天 0.1 · 攒够 0.5 抵打印费</span></div>
+      <div class="go">去打卡</div>
     </a>
   </section>
 
-  <!-- 免费打印：广告填充板块 -->
-  <section class="free" id="free">
-    <div class="free-h">
-      <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></div>
-      <div><b>免费打印活动</b><span>领红包下单，打印费原路退回</span></div>
-      <div class="free-tag">活动</div>
-    </div>
-
-    <div class="split">
-      <!-- 左：规则（怎么参加） -->
-      <div class="col">
-        <div class="col-h"><i>规则</i>怎么参加</div>
-        <div class="rule"><div class="no">1</div><div class="bd">
-          <b>下单前先领红包</b>
-          <span>在公众号菜单点开外卖 / 打车红包，从红包入口完成下单。</span>
-          <div class="caps"><i>外卖红包</i><i>打车红包</i></div>
-        </div></div>
-        <div class="rule"><div class="no">2</div><div class="bd">
-          <b>打印后发两张截图</b>
-          <span>打印订单截图 + 用了红包那笔订单截图，发到公众号对话框。</span>
-          <div class="caps"><i>打印订单</i><i>红包订单</i></div>
-        </div></div>
-        <div class="rule"><div class="no">3</div><div class="bd">
-          <b>打印费原路退回</b>
-          <span>客服核实后按原支付路径退回，多笔订单可累计合并，上不封顶。</span>
-          <div class="caps"><i>可累计</i><i>上不封顶</i></div>
-        </div></div>
-      </div>
-
-      <!-- 右：真实案例（同屏对照） -->
-      <div class="col">
-        <div class="col-h"><i>真实案例</i>照着做就行<em>点图看大图</em></div>
-        <figure class="case" id="openCase" role="button" tabindex="0" aria-label="查看免费打印真实对话案例大图">
-          <span class="tag">真实对话</span>
-          <img src="17.jpg" alt="免费打印实操对话案例：发打印订单截图 + 红包订单截图，客服核实后原路退回" loading="lazy">
-          <figcaption class="cd">点击查看完整对话 ›</figcaption>
-        </figure>
-      </div>
-    </div>
-
-    <div class="casetip">
-      <span aria-hidden="true">💬</span>
-      <span>看不懂规则没关系，<b>照右边的对话做就行</b>：把两张截图发给客服，剩下的交给我们。</span>
-    </div>
-
-    <div class="faq">
-      <details open><summary>红包在哪里领？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
-        <p>在公众号对话框底部菜单「领红包」里，外卖和打车各有一个入口。下单前点一下即可，不用额外注册。</p></details>
-      <details><summary>截图要发哪两张？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
-        <p>一张是打印订单完成页（能看到金额），一张是通过红包入口下单的那笔订单（能看到已用红包）。两张一起发到公众号对话框即可。</p></details>
-      <details><summary>多笔订单能一起算吗？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
-        <p>可以。多笔订单的打印费可以累计合并后一次性退回，上不封顶。</p></details>
-      <details><summary>多久能退到？<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
-        <p>客服核实截图后按原支付路径退回。非工作时间留言，恢复后第一时间处理。</p></details>
-    </div>
-
-    <a class="free-cta" href="https://HP3327.github.io/free-print/" target="_blank" rel="noopener">
-      查看活动完整规则
-      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-    </a>
-  </section>
+  <!-- 免费打印 / 打卡活动板块已撤，活动只保留顶部曝光条与底部悬浮条 -->
 
   <div class="foot">打印过程中遇到任何问题，无论打多少页、打到哪一步，均可全额退款<br>
     活动最终解释权在规则范围内由本公众号所有 · 疑问请通过公众号对话框联系我们</div>
 </div>
-
-<!-- 底部活动条 -->
-<div class="dock"><div class="dock-in">
-  <button class="dock-btn" id="dockBtn">
-    <span class="ic"><svg viewBox="0 0 24 24"><path d="M20 7h-2.2A3 3 0 0 0 12 4.2 3 3 0 0 0 6.2 7H4a1 1 0 0 0-1 1v3h8V9h2v2h8V8a1 1 0 0 0-1-1zM3 20a1 1 0 0 0 1 1h7v-8H3v7zm10 1h7a1 1 0 0 0 1-1v-7h-8v8z"/></svg></span>
-    <span><b>免费打印活动</b><span>领红包下单 · 打印费原路退回</span></span>
-    <span class="go">去看看</span>
-  </button>
-</div></div>
 
 <!-- 抽屉 -->
 <div class="mask" id="mask"></div>
@@ -406,6 +279,7 @@
   </div>
   <div class="sh-body" id="shBody"></div>
 </div>
+
 
 <script>
 (function(){
@@ -464,16 +338,6 @@
     });
   }
 
-  function scrollToFree(e){
-    e.preventDefault();
-    var el = document.getElementById('free');
-    window.scrollTo({top: el.getBoundingClientRect().top + window.pageYOffset - 62, behavior:'smooth'});
-  }
-  document.querySelectorAll('[data-free]').forEach(function(a){
-    a.addEventListener('click', scrollToFree);
-  });
-  document.getElementById('dockBtn').addEventListener('click', scrollToFree);
-
   var h = (location.hash||'').replace('#','');
   if(panels[h]) go(h);
   window.addEventListener('hashchange', function(){
@@ -504,69 +368,24 @@
       '<div class="wm">任何打印问题，无论打多少页、打到哪一步，<b>全额退款</b></div>';
     open();
   }
-  function openShot(){
-    shTitle.textContent = '免费打印实操对话';
-    shSub.textContent = '上下滑动查看完整对话';
-    shBody.innerHTML =
-      '<img src="17.jpg" style="width:100%;border-radius:14px;border:1px solid #f0e4d8" alt="免费打印实操对话案例">'+
-      '<div class="sh-steps">'+
-        '<div><i>①</i><span>下单前先在公众号菜单领外卖 / 打车红包，从红包入口下单</span></div>'+
-        '<div><i>②</i><span>打印完成后，把「打印订单截图」和「红包订单截图」发给客服</span></div>'+
-        '<div><i>③</i><span>客服核实后按原支付路径退回，多笔可累计，上不封顶</span></div>'+
-      '</div>'+
-      '<div class="sh-btns"><button data-close="1">关闭</button></div>';
-    open();
-  }
-
   document.addEventListener('click', function(e){
     var t = e.target, c = t.closest && t.closest.bind(t);
     if(!c) return;
     var tile = c('.tile');
     if(tile){ openQR(tile.getAttribute('data-qr'), tile.getAttribute('data-nm')); return; }
     if(c('[data-close]')){ close(); return; }
-    if(c('#openCase') || c('#openShot') || t.id==='openShot2'){ openShot(); return; }
-  });
-  document.addEventListener('keydown', function(e){
-    if((e.key === 'Enter' || e.key === ' ') && e.target && e.target.id === 'openCase'){
-      e.preventDefault(); openShot();
-    }
   });
 
-  /* ===== 口令复制：点真实入口的那一下同步写入（浏览器只认用户手势） =====
-     关键：必须「同步」调用，不能包在 setTimeout / Promise 里，否则授权失效。
-     优先用同步的 execCommand（微信 WebView 兼容性最好），navigator.clipboard 兜底。
-     全程零提示、零变色。 */
-  var COPY = '1来美团，吃得更好，生活更好❤️复制整条信息，打开👉美团👈 http:/💰uhNTExZWQ1NTc💰 ￥FpmKTsvaspk￥/ HU7405！S28py9VsiwZ0Cp2u！ MU5104';
-  function copyText(txt){
-    var ok = false;
-    // ① 同步路径：手势内直接 execCommand，兼容微信/安卓 WebView
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = txt;
-      ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0';
-      ta.setAttribute('readonly','');
-      ta.contentEditable = true; ta.readOnly = false;
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      ta.setSelectionRange(0, 999999);
-      ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-    } catch(e){}
-    // ② 兜底：现代 API（异步，作为补充手段）
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      try { navigator.clipboard.writeText(txt); } catch(e){}
-    }
-    return ok;
+  /* ===== 顶部曝光条：整条除「×」外都是直达打卡页的链接，这里只管关闭 ===== */
+  var rpBar = document.getElementById('rpBar');
+  var rpX   = document.getElementById('rpX');
+  if(rpX){
+    rpX.addEventListener('click', function(e){
+      e.preventDefault(); e.stopPropagation();
+      if(rpBar) rpBar.style.display = 'none';
+    });
   }
-  // 三个真实入口：用户一点，就在那一下同步复制（照常执行原本的放大/切换/滚动）
-  document.addEventListener('click', function(e){
-    var t = e.target, c = (t && t.closest) ? t.closest.bind(t) : null;
-    if(!c) return;
-    if(c('.tile') || c('#seg button') || c('[data-free]') || c('#dockBtn')){
-      copyText(COPY);
-    }
-  }, true);
+
 })();
 </script>
 </body>
