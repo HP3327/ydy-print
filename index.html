@@ -420,11 +420,88 @@
       '<div class="wm">任何打印问题，无论打多少页、打到哪一步，<b>全额退款</b></div>';
     open();
   }
+  /* ===== 访问统计：每天多少人打开、点了哪栋楼的码 =====
+     页面挂在 GitHub Pages，数据库在另一个域名，浏览器会拦跨域写入，
+     所以在这里藏一个 1×1 的隐形页（属自己域名，与数据库同源）代为写入。
+     只记「匿名设备 + 哪天 + 点了哪栋楼」，不记手机号、不记微信身份、不跟打卡账号关联。 */
+  var ST = (function(){
+    var HOST  = 'https://coupon-checkin.app.workbuddy.host';
+    var SHARE = '46E5NCXYTQ';
+    var dev = '';
+    try{
+      dev = localStorage.getItem('ydy_dev') || '';
+      if(!dev || dev.length < 8){
+        dev = 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+        localStorage.setItem('ydy_dev', dev);
+      }
+    }catch(e){
+      dev = 'n' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    }
+
+    var box = null, linked = false, useFallback = false, queue = [];
+
+    function makeBox(extra){
+      var f = document.createElement('iframe');
+      f.src = HOST + '/track.html?sharecode=' + SHARE + (extra || '');
+      f.setAttribute('aria-hidden', 'true');
+      f.setAttribute('tabindex', '-1');
+      f.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;top:-9999px;border:0;opacity:0;pointer-events:none';
+      document.body.appendChild(f);
+      return f;
+    }
+
+    function fallback(it){
+      var f = makeBox('&k=' + it.k + '&l=' + encodeURIComponent(it.l) +
+                      '&d=' + encodeURIComponent(dev));
+      setTimeout(function(){ try{ f.parentNode.removeChild(f); }catch(e){} }, 4000);
+    }
+
+    function push(it){
+      if(useFallback){ fallback(it); return; }
+      if(linked && box){
+        try{ box.contentWindow.postMessage({ __hit:1, kind:it.k, label:it.l, dev:dev }, HOST); return; }catch(e){}
+      }
+      queue.push(it);
+      if(queue.length > 30) queue.shift();
+    }
+
+    window.addEventListener('message', function(ev){
+      if(!ev.data || !ev.data.__hitReady) return;
+      linked = true;
+      while(queue.length){ push(queue.shift()); }
+    });
+
+    function boot(){
+      if(!document.body) return;
+      box = makeBox('');
+      setTimeout(function(){
+        if(linked) return;
+        useFallback = true;
+        var rest = queue.splice(0, queue.length);
+        rest.forEach(fallback);
+      }, 3000);
+    }
+
+    if(document.readyState === 'complete') boot();
+    else window.addEventListener('load', boot);
+
+    return { track: function(k, l){ push({ k:k, l:l || '' }); } };
+  })();
+  function track(k, l){ ST.track(k, l); }
+  track('view', '预约打印页');
+
   document.addEventListener('click', function(e){
     var t = e.target, c = t.closest && t.closest.bind(t);
     if(!c) return;
     var tile = c('.tile');
-    if(tile){ openQR(tile.getAttribute('data-qr'), tile.getAttribute('data-nm'), tile.getAttribute('data-big')==='1'); return; }
+    if(tile){
+      track('qr',
+        tile.getAttribute('data-nm') + (tile.getAttribute('data-big')==='1' ? '·大机' : ''));
+      openQR(tile.getAttribute('data-qr'), tile.getAttribute('data-nm'), tile.getAttribute('data-big')==='1');
+      return;
+    }
+    if(c('.adcard')){ track('card', '打卡攒墨汁'); return; }
+    if(c('.rp')){ track('banner', '去打卡'); return; }
     if(c('[data-close]')){ close(); return; }
   });
 
@@ -481,6 +558,7 @@
   if(cpBtn){
     cpBtn.addEventListener('click', function(){
       if(copyText(COPY)){
+        track('copy', '美团红包');
         showToast('口令已复制 ✓ 打开美团即可领取红包');
       }else{
         showToast('复制未成功，请长按页面文字手动复制');
